@@ -1,33 +1,33 @@
-function setUpControls(jugador) {
+function setUpControls(player) {
   document.addEventListener('keydown', function (event) {
     switch (event.key) {
       case "ArrowUp":
-        jugador.arriba();
+        player.up();
         break;
       case "ArrowDown":
-        jugador.abajo();
+        player.down();
         break;
       case "ArrowRight":
-        jugador.derecha();
+        player.right();
         break;
       case "ArrowLeft":
-        jugador.izquierda();
+        player.left();
         break;
     }
   });
   document.addEventListener('keyup', function (event) {
     switch (event.key) {
       case "ArrowUp":
-        jugador.avanzaSuelta();
+        player.stopMoving();
         break;
       case "ArrowDown":
-        jugador.avanzaSuelta();
+        player.stopMoving();
         break;
       case "ArrowRight":
-        jugador.giraSuelta();
+        player.stopTuning();
         break;
       case "ArrowLeft":
-        jugador.giraSuelta();
+        player.stopTuning();
         break;
     }
   });

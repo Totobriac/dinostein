@@ -1,88 +1,80 @@
-import { convierteRadianes, normalizaAngulo } from "./functions.js";
-import { Rayo } from "./rayo.js"
+import { convertToRadians, normalizeAngle } from "./functions.js";
+import { Ray } from "./ray.js"
 
 const FOV = 60;
 
 class Player {
 
-  constructor(con, escenario, x, y) {
+  constructor(con, level, x, y) {
     this.ctx = con;
-    this.escenario = escenario;
+    this.level = level;
     this.x = x;
     this.y = y;
-    this.avanza = 0;	
-    this.gira = 0;		
-    this.anguloRotacion = 0;
-    this.velGiro = convierteRadianes(3);	
-    this.velMovimiento = 3;
+    this.move = 0;	
+    this.turn = 0;		
+    this.turnAngle = 0;
+    this.turnSpeed = convertToRadians(3);	
+    this.moveSpeed = 3;
 
-    //VISIÓN (RENDER)
-    this.numRayos = 500;		
-    this.rayos = [];
-    //CALCULAMOS EL ANGULO DE LOS RAYOS
-    var medioFOV = FOV / 2;
-    var incrementoAngulo = convierteRadianes(FOV / this.numRayos);
-    var anguloInicial = convierteRadianes(this.anguloRotacion - medioFOV);
-    var anguloRayo = anguloInicial;
-    //CREAMOS RAYOS
-    for (let i = 0; i < this.numRayos; i++) {
-      this.rayos[i] = new Rayo(this.ctx, this.escenario, this.x, this.y, this.anguloRotacion, anguloRayo, i);
-      anguloRayo += incrementoAngulo;
+    this.numbOfRays = 500;		
+    this.rays = [];				
+
+    var halfFOV = FOV / 2;
+    var addedAngle = convertToRadians(FOV / this.numbOfRays);
+    var startAngle= convertToRadians(this.turnAngle - halfFOV);
+    var angleRay = startAngle;
+
+    for (let i = 0; i < this.numbOfRays; i++) {
+      this.rays[i] = new Ray(this.ctx, this.level, this.x, this.y, this.turnAngle, angleRay, i);
+      angleRay += addedAngle;
     }
   }
-  //LÓGICA DEL TECLADO
-  arriba() {
-    this.avanza = 1;
+  up() {
+    this.move = 1;
   }
-  abajo() {
-    this.avanza = -1;
+  down() {
+    this.move = -1;
   }
-  derecha() {
-    this.gira = 1;
+  right() {
+    this.turn = 1;
   }
-  izquierda() {
-    this.gira = -1;
+  left() {
+    this.turn = -1;
   }
-  avanzaSuelta() {
-    this.avanza = 0;
+  stopMoving() {
+    this.move = 0;
   }
-  giraSuelta() {
-    this.gira = 0;
+  stopTuning() {
+    this.turn = 0;
   }
   colision(x, y) {
-    var choca = false;
-    //AVERIGUAMOS LA CASILLA A LA QUE CORRESPONDEN NUESTRAS COORDENADAS
-    var casillaX = parseInt(x / this.escenario.anchoT);
-    var casillaY = parseInt(y / this.escenario.altoT);
-    if (this.escenario.colision(casillaX, casillaY))
-      choca = true;
-    return choca;
+    var hit = false;
+    var squareX = parseInt(x / this.level.tileWidth);
+    var squareY = parseInt(y / this.level.tileHeight);
+    if (this.level.colision(squareX, squareY))
+      hit = true;
+    return hit;
   }
-  //ACTUALIZAMOS LA POSICIÓN
-  actualiza() {
-    //AVANZAMOS
-    var nuevaX = this.x + this.avanza * Math.cos(this.anguloRotacion) * this.velMovimiento;
-    var nuevaY = this.y + this.avanza * Math.sin(this.anguloRotacion) * this.velMovimiento;
+  update() {
+    var newX = this.x + this.move * Math.cos(this.turnAngle) * this.moveSpeed;
+    var newY = this.y + this.move * Math.sin(this.turnAngle) * this.moveSpeed;
 
-    if (!this.colision(nuevaX, nuevaY)) {
-      this.x = nuevaX;
-      this.y = nuevaY;
+    if (!this.colision(newX, newY)) {
+      this.x = newX;
+      this.y = newY;
     }
-    //GIRAMOS
-    this.anguloRotacion += this.gira * this.velGiro;
-    this.anguloRotacion = normalizaAngulo(this.anguloRotacion);
-    //ACTUALIZAMOS LOS RAYOS
-    for (let i = 0; i < this.numRayos; i++) {
-      this.rayos[i].x = this.x;
-      this.rayos[i].y = this.y;
-      this.rayos[i].setAngulo(this.anguloRotacion);
+    this.turnAngle += this.turn * this.turnSpeed;
+    this.turnAngle = normalizeAngle(this.turnAngle);
+    for (let i = 0; i < this.numbOfRays; i++) {
+      this.rays[i].x = this.x;
+      this.rays[i].y = this.y;
+      this.rays[i].setAngle(this.turnAngle);
     }
   }
-  dibuja() {
-    this.actualiza();
-    //RAYOS
-    for (let i = 0; i < this.numRayos; i++) {
-      this.rayos[i].dibuja();
+  draw() {
+    this.update();
+    for (let i = 0; i < this.numbOfRays; i++) {
+      this.rays[i].draw();
     }
   }
 }
