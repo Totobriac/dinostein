@@ -1,5 +1,5 @@
-import {convierteRadianes, normalizaAngulo} from "./functions.js";
-import {Rayo} from "./rayo.js"
+import { convierteRadianes, normalizaAngulo } from "./functions.js";
+import { Rayo } from "./rayo.js"
 
 const FOV = 60;
 
@@ -10,15 +10,15 @@ class Player {
     this.escenario = escenario;
     this.x = x;
     this.y = y;
-    this.avanza = 0;	//-1 atrás, 1 adelante
-    this.gira = 0;		//-1 izquierda, 1 derecha
+    this.avanza = 0;	
+    this.gira = 0;		
     this.anguloRotacion = 0;
-    this.velGiro = convierteRadianes(3);		//3 grados en radianes
+    this.velGiro = convierteRadianes(3);	
     this.velMovimiento = 3;
 
     //VISIÓN (RENDER)
-    this.numRayos = 500;		//Cantidad de rayos que vamos a castear (los mismos que tenga el ancho del canvas)
-    this.rayos = [];				//Array con todos los rayos
+    this.numRayos = 500;		
+    this.rayos = [];
     //CALCULAMOS EL ANGULO DE LOS RAYOS
     var medioFOV = FOV / 2;
     var incrementoAngulo = convierteRadianes(FOV / this.numRayos);
@@ -66,11 +66,11 @@ class Player {
 
     if (!this.colision(nuevaX, nuevaY)) {
       this.x = nuevaX;
-      this.y = nuevaY;   
+      this.y = nuevaY;
     }
     //GIRAMOS
     this.anguloRotacion += this.gira * this.velGiro;
-    this.anguloRotacion = normalizaAngulo(this.anguloRotacion);	
+    this.anguloRotacion = normalizaAngulo(this.anguloRotacion);
     //ACTUALIZAMOS LOS RAYOS
     for (let i = 0; i < this.numRayos; i++) {
       this.rayos[i].x = this.x;

@@ -1,5 +1,5 @@
 import { convierteRadianes, distanciaEntrePuntos } from "./functions.js";
-import { zBuffer} from "./raycasting.js";
+import { zBuffer } from "./raycasting.js";
 
 const FOV = 60;
 const FOV_medio = convierteRadianes(FOV / 2);
@@ -43,7 +43,7 @@ class Sprite {
   dibuja() {
     this.actualizaDatos();
     if (this.visible == true) {
-      var altoTile = 500;	
+      var altoTile = 500;
       var distanciaPlanoProyeccion = (canvasAncho / 2) / Math.tan(FOV / 2);
       var alturaSprite = (altoTile / this.distancia) * distanciaPlanoProyeccion;
       var y0 = parseInt(canvasAlto / 2) - parseInt(alturaSprite / 2);
@@ -51,14 +51,14 @@ class Sprite {
       var altoTextura = 64;
       var anchoTextura = 64;
       var alturaTextura = y0 - y1;
-      var anchuraTextura = alturaTextura;	
+      var anchuraTextura = alturaTextura;
       var dx = this.x - this.jugador.x;
       var dy = this.y - this.jugador.y;
       var spriteAngle = Math.atan2(dy, dx) - this.jugador.anguloRotacion;
       var viewDist = 500;
       var x0 = Math.tan(spriteAngle) * viewDist;
       var x = (canvasAncho / 2 + x0 - anchuraTextura / 2);
-      this.ctx.imageSmoothingEnabled = false;	
+      this.ctx.imageSmoothingEnabled = false;
       var anchuraColumna = alturaTextura / altoTextura;
       for (let i = 0; i < anchoTextura; i++) {
         for (let j = 0; j < anchuraColumna; j++) {
@@ -80,15 +80,14 @@ function inicializaSprites(jugador, ctx) {
   sprites[0] = new Sprite(300, 120, imgArmor, jugador, ctx);
   sprites[1] = new Sprite(150, 150, imgArmor, jugador, ctx);
   sprites[2] = new Sprite(320, 300, imgPlanta, jugador, ctx);
-  sprites[3] = new Sprite(300, 380, imgPlanta, jugador, ctx);  
+  sprites[3] = new Sprite(300, 380, imgPlanta, jugador, ctx);
 }
 
-
-function renderSprites() {  
+function renderSprites() {
   sprites.sort(function (obj1, obj2) {
     return obj2.distancia - obj1.distancia;
   });
-  for (let a = 0; a < sprites.length; a++) {    
+  for (let a = 0; a < sprites.length; a++) {
     sprites[a].dibuja();
   }
 }
