@@ -1,10 +1,10 @@
 import { normalizeAngle, distBetweenTwoPoints } from "./functions.js";
 import { zBuffer } from "./raycasting.js";
-var canvasWidth = 500;
-var canvasHeight = 500;
+var canvasWidth = 400;
+var canvasHeight = 400;
 const FOV = 60;
 
-var tileSize = 50;
+var tileSize = 40;
 var tiles = new Image();
 tiles.src = "./assets/walls.png";
 
@@ -185,7 +185,7 @@ class Ray {
   }
 
   renderWalls() {
-    var tileHeightile = 500;
+    var tileHeightile = 400;
     var wallHeight = (tileHeightile / this.distance) * this.projectPlaneDist;
 
     var y0 = parseInt(canvasHeight / 2) - parseInt(wallHeight / 2);
@@ -195,7 +195,7 @@ class Ray {
     var heightTileTexture = 64;
     var textureHeight = y0 - y1;
     this.ctx.imageSmoothingEnabled = false;
-    this.ctx.drawImage(tiles, this.pixelTexture, ((this.textureId - 1) * heightTileTexture), this.pixelTexture, 63, x, y1, 1, textureHeight);
+    this.ctx.drawImage(tiles, this.pixelTexture, ((this.textureId - 1) * heightTileTexture), this.pixelTexture, 63, x + 400, y1, 1, textureHeight);
   }
   draw() {
     this.cast();

@@ -1,8 +1,8 @@
 function drawFloorCeiling(ctx) {
   ctx.fillStyle = '#666666';
-  ctx.fillRect(0, 0, 500, 250);
+  ctx.fillRect(400, 0, 400, 200);
   ctx.fillStyle = '#752300';
-  ctx.fillRect(0, 250, 500, 500);
+  ctx.fillRect(400, 200, 400, 400);
 }
 
 var lev = [
@@ -18,7 +18,7 @@ var lev = [
   [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
 ];
 
-var tileSize = 50;
+var tileSize = 40;
 
 class Level {
 

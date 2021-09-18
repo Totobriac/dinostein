@@ -7,8 +7,12 @@ import { setUpControls } from "./control.js";
 var canvas = document.getElementById('canvas');
 var ctx = canvas.getContext('2d');
 var FPS = 50;
-var canvasWidth = 500;
-var canvasHeight = 500;
+
+var canvasWidth = 1200;
+var canvasHeight = 400;
+
+var gameWidth = 500;
+var gameHeight = 500;
 let zBuffer = [];
 
 canvas.width = canvasWidth;

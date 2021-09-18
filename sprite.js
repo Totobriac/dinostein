@@ -3,8 +3,8 @@ import { zBuffer } from "./raycasting.js";
 
 const FOV = 60;
 const half_FOV = convertToRadians(FOV / 2);
-var canvasWidth = 500;
-var canvasHeight = 500;
+var canvasWidth = 400;
+var canvasHeight = 400;
 var sprites = [];
 
 class Sprite {
@@ -63,7 +63,7 @@ class Sprite {
         for (let j = 0; j < columnWidth; j++) {
           var x1 = parseInt(x + ((i - 1) * columnWidth) + j);
           if (zBuffer[x1] > this.distance) {
-            this.ctx.drawImage(this.image, i, 0, 1, heightTileTexture - 1, x1, y1, 1, textureHeight);
+            this.ctx.drawImage(this.image, i, 0, 1, heightTileTexture - 1, x1 + 400, y1, 1, textureHeight);
           }
         }
       }

@@ -16,7 +16,7 @@ class Player {
     this.turnSpeed = convertToRadians(3);	
     this.moveSpeed = 3;
 
-    this.numbOfRays = 500;		
+    this.numbOfRays = 400;		
     this.rays = [];				
 
     var halfFOV = FOV / 2;

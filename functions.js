@@ -16,8 +16,8 @@ function distBetweenTwoPoints(x1, y1, x2, y2) {
 }
 
 function resizeCanvas() {
-  canvas.style.width = "600px";
-  canvas.style.height = "400px";
+  // canvas.style.width = "400px";
+  // canvas.style.height = "400px";
 }
 
-export { normalizeAngle, convertToRadians, distBetweenTwoPoints, resizeCanvas }
+export { normalizeAngle, convertToRadians, distBetweenTwoPoints, resizeCanvas };
